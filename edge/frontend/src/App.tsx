@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import './App.css';
 import HeatMap from '@uiw/react-heat-map';
+import { API } from './api/api';
 
 const value = [
   { date: '2016/01/11', count: 2 },
@@ -13,6 +15,19 @@ const value = [
 ];
 
 function App() {
+
+  useEffect(() => {
+    const fetchMessage = async () => {
+      try {
+        const response = await API.getMessage();
+        console.log(response);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchMessage();
+  }, []);
+
   return (
     <div>
       <HeatMap
