@@ -1,9 +1,9 @@
 import { api } from './config';
 
 export const API = {
-  getMessage: async function () {
+  getTotalPullUps: async function () {
     const response = await api.request({
-      url: `/getMessage`,
+      url: `/totalPullUps`,
       method: 'GET'
     });
 

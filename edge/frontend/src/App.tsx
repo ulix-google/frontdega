@@ -1,26 +1,19 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import Tooltip from '@uiw/react-tooltip';
 import './App.css';
 import HeatMap from '@uiw/react-heat-map';
 import { API } from './api/api';
 
-const value = [
-  { date: '2016/01/11', count: 2 },
-  { date: '2016/01/12', count: 20 },
-  { date: '2016/01/13', count: 10 },
-  ...[...Array(17)].map((_, idx) => ({ date: `2016/02/${idx + 10}`, count: idx, content: '' })),
-  { date: '2016/04/11', count: 2 },
-  { date: '2016/05/01', count: 5 },
-  { date: '2016/05/02', count: 5 },
-  { date: '2016/05/04', count: 11 },
-];
-
 function App() {
+
+  const [heatMapData, setHeatMapData] = useState([]);
 
   useEffect(() => {
     const fetchMessage = async () => {
       try {
-        const response = await API.getMessage();
+        const response = await API.getTotalPullUps();
         console.log(response);
+        setHeatMapData(response);
       } catch (error) {
         console.error(error);
       }
@@ -31,9 +24,18 @@ function App() {
   return (
     <div>
       <HeatMap
-        value={value}
+        value={heatMapData}
         weekLabels={['', 'Mon', '', 'Wed', '', 'Fri', '']}
-        startDate={new Date('2016/01/01')}
+        startDate={new Date('2022/09/01')}
+        width={900}
+        rectRender={(props, data) => {
+          // if (!data.count) return <rect {...props} />;
+          return (
+            <Tooltip placement="top" content={`count: ${data.count || 0}`}>
+              <rect {...props} />
+            </Tooltip>
+          );
+        }}
       />
     </div>
   )

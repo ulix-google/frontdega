@@ -1,6 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from config import Config
+import log
+
 app = FastAPI()
 
 origins = [
@@ -16,6 +19,13 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
+log.configure_logging()
+cfg = Config()
+
 @app.get("/getMessage")
 async def root():
     return {"message": "Hello World"}
+
+@app.get("/totalPullUps")
+async def total_pull_ups():
+    return cfg.bodega.read_total_pull_ups()
