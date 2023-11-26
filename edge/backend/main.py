@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from config import Config
 import log
 
-app = FastAPI()
+app = FastAPI(root_path="/api")
 
 origins = [
     "http://localhost:3000",

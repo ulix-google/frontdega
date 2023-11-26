@@ -8,7 +8,7 @@
 # Load the environment variables.
 # -a: Each variable or function that is created or modified is given the export
 # attribute and marked for export to the environment of subsequent commands.
-set -a            
+set -a
 source .env
 # Turn off -a setting.
 set +a
@@ -17,4 +17,4 @@ set +a
 # -N: Do not execute a remote command.  This is useful for just forwarding 
 # ports.
 # -T: Disable pseudo-terminal allocation.
-ssh -N -T -R $PROXY_PORT:$LOCAL_HOST:$LOCAL_PORT $PROXY_USER@$PROXY_HOST
+ssh -N -T -R $PROXY_PORT:$LOCAL_HOST:$LOCAL_PORT -R 3000:127.0.0.1:3000 $PROXY_USER@$PROXY_HOST
