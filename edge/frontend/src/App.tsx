@@ -4,6 +4,8 @@ import './App.css';
 import HeatMap from '@uiw/react-heat-map';
 import { API } from './api/api';
 
+document.body.style.backgroundColor = "#19ADED";
+
 function App() {
 
   const [heatMapData, setHeatMapData] = useState([]);
@@ -22,16 +24,28 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <div
+      style={{
+        backgroundColor: '#EBDC5A',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
       <HeatMap
         value={heatMapData}
         weekLabels={['', 'Mon', '', 'Wed', '', 'Fri', '']}
         startDate={new Date('2022/09/01')}
         width={900}
+        panelColors={{
+          0: '#E8E7E7',
+          1: '#ECDDDA',
+          5: '#ECB0A5',
+          10: '#EA7863',
+          20: '#EA472A',
+        }}
         rectRender={(props, data) => {
-          // if (!data.count) return <rect {...props} />;
           return (
-            <Tooltip placement="top" content={`count: ${data.count || 0}`}>
+            <Tooltip placement="top" content={`${data.count || 0} pullups on ${data.date}`}>
               <rect {...props} />
             </Tooltip>
           );
